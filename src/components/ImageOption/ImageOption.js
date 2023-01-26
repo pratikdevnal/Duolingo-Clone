@@ -3,11 +3,11 @@ import styles from './styles';
 import react from 'react';
 
 
-export default function ImageOption() {
+export default function ImageOption({image,text}) {
   return (
     <View style={styles.optionContainer}>
-    <Image source={{uri:"https://fsmd-assets.s3.eu-west-1.amazonaws.com/duolingo/images/cup.png"}} style={styles.optionImage} resizeMode="contain"/>
-    <Text style={styles.optionText}>Glass</Text>
+    <Image source={{uri:image}} style={styles.optionImage} resizeMode="contain"/>
+    <Text style={styles.optionText}>{text}</Text>
    </View>
   )
 }

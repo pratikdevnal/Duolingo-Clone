@@ -3,23 +3,23 @@ import { StyleSheet, Text, View, Image } from 'react-native';
 import styles from './App.style';
 import icon from "./assets/icon.png";
 import ImageOption  from './src/components/ImageOption/ImageOption';
-// const ImageOption = () =>
-// {
-//   return(
-//     <View style={styles.optionContainer}>
-//     <Image source={{uri:"https://fsmd-assets.s3.eu-west-1.amazonaws.com/duolingo/images/cup.png"}} style={styles.optionImage} resizeMode="contain"/>
-//     <Text style={styles.optionText}>Glass</Text>
-//     </View>
-//   );
-// };
+import question from "./assets/data/oneQuestionWithOption"
+
 const App = ()=> 
 {
+  // const origin = [1,2,3];
+  // const double = origin.map((iterator)=>iterator*2);
+  // console.log(double);
+
   const status = 'ok';
   return (
     <View style={styles.root}>
-      <Text style={styles.text}>Which of these is "the glass"?</Text>
+      <Text style={styles.text}>{question.question}</Text>
       <View style={styles.optionsContainer}>  
-      <ImageOption/>
+      {question.options.map((option)=>(
+        <ImageOption key={option.id} image={option.image} text={option.text}/>
+      ))}
+      
       </View>
         
     </View>
