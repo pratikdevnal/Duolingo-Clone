@@ -5,6 +5,7 @@ import icon from "./assets/icon.png";
 import ImageOption  from './src/components/ImageOption/ImageOption';
 import question from "./assets/data/oneQuestionWithOption";
 import { useState } from 'react';
+import Button from './src/components/Button';
 
 const App = ()=> 
 {
@@ -13,6 +14,10 @@ const App = ()=>
   // console.log(double);
 
   // const status = 'ok';
+  const onButtonPress = () =>
+  {
+    console.warn("Pressed");
+  }
   const [selected , setSelected] = useState(null);
 
   // value = 10;
@@ -29,9 +34,8 @@ const App = ()=>
         onPress={()=> setSelected(option)}
         />
       ))}
-      
       </View>
-        
+        <Button text="Check" onPress={onButtonPress} disabled={!selected}/>
     </View>
   );
 };
