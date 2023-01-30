@@ -1,41 +1,54 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View, Image,Alert } from 'react-native';
 import styles from './App.style';
 import icon from "./assets/icon.png";
 import ImageOption  from './src/components/ImageOption/ImageOption';
-import question from "./assets/data/oneQuestionWithOption";
-import { useState } from 'react';
+import question from "./assets/data/imageMulatipleChoiceQuestions";
+import { useState, useEffect} from 'react';
 import Button from './src/components/Button';
+import ImageMultipleChoiceQuestion from './src/components/ImageMultipleChoiceQuestion';
 
 const App = ()=> 
 {
   // const origin = [1,2,3];
   // const double = origin.map((iterator)=>iterator*2);
   // console.log(double);
-
   // const status = 'ok';
-  const onButtonPress = () =>
-  {
-    console.warn("Pressed");
-  }
-  const [selected , setSelected] = useState(null);
+  const [currentQuestionIndex,setCurrentQuestionIndex]= useState(0);
+  const [currentQuestion, setCurrentQuestion] = useState(question[currentQuestionIndex]);
 
+  useEffect(()=>
+  {
+    if(currentQuestionIndex>=question.length)
+    {
+      Alert.alert("You Won!!!")
+      setCurrentQuestionIndex(0);
+    }
+    else{
+      setCurrentQuestion(question[currentQuestionIndex])
+    }
+
+  },[currentQuestionIndex]);
+ 
+ 
+ const onCorrect = () =>
+ {
+  setCurrentQuestionIndex(currentQuestionIndex+1);
+ }
+
+ const onWrong = () =>
+ {
+  Alert.alert("Wrooong");
+ }
+ 
   // value = 10;
   return (
     <View style={styles.root}>
-      <Text style={styles.text}>{question.question}</Text>
-      <View style={styles.optionsContainer}>  
-      {question.options.map((option)=>(
-        <ImageOption 
-        key={option.id} 
-        image={option.image} 
-        text={option.text}
-        isSelected = {selected?.id===option.id}
-        onPress={()=> setSelected(option)}
-        />
-      ))}
-      </View>
-        <Button text="Check" onPress={onButtonPress} disabled={!selected}/>
+  <ImageMultipleChoiceQuestion 
+    question={currentQuestion}
+    onCorrect={onCorrect}
+    onWrong={onWrong}
+  />
     </View>
   );
 };
