@@ -7,7 +7,7 @@ import mascot from "../../../assets/images/mascot.png";
 // import question from "../../../assets/data/openEndedQuestions";
 
 const OpenEndedQuestion = ({ question, onCorrect, onWrong }) => {
-  const [input, setInput] = useState("Enter your answer");
+  const [input, setInput] = useState("");
   const onButtonPress = () => {
     if (question.answer.toLowerCase().trim() === input.toLowerCase().trim()) {
       onCorrect();
@@ -35,7 +35,7 @@ const OpenEndedQuestion = ({ question, onCorrect, onWrong }) => {
         textAlignVertical="top"
         multiline
       />
-      <Button text="Check" onPress={onButtonPress} disabled={false} />
+      <Button text="Check" onPress={onButtonPress} disabled={!input} />
     </>
   );
 };

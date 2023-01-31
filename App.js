@@ -10,6 +10,7 @@ import ImageMultipleChoiceQuestion from "./src/components/ImageMultipleChoiceQue
 import question from "./assets/data/allQuestions";
 import Header from "./src/components/Header/Header";
 import allQuestions from "./assets/data/allQuestions";
+import { registerAsset } from "react-native-web/dist/cjs/modules/AssetRegistry";
 
 const App = () => {
   // const origin = [1,2,3]; // const double = origin.map((iterator)=>iterator*2); // console.log(double); // const status = 'ok';
@@ -17,6 +18,7 @@ const App = () => {
   const [currentQuestion, setCurrentQuestion] = useState(
     question[currentQuestionIndex]
   );
+  const [lives, setLives] = useState(5);
   useEffect(() => {
     if (currentQuestionIndex >= question.length) {
       Alert.alert("You Won!!!");
@@ -25,16 +27,29 @@ const App = () => {
       setCurrentQuestion(question[currentQuestionIndex]);
     }
   }, [currentQuestionIndex]);
-
+  const restart = () => {
+    setLives(5);
+    setCurrentQuestionIndex(0);
+  };
   const onCorrect = () => {
     setCurrentQuestionIndex(currentQuestionIndex + 1);
   };
   const onWrong = () => {
-    Alert.alert("Wrooong");
+    if (lives <= 1) {
+      Alert.alert("game over", "try again", [
+        {
+          text: "try again",
+          onPress: restart,
+        },
+      ]);
+    } else {
+      setLives(lives - 1);
+      Alert.alert("Wrooong");
+    }
   };
   return (
     <View style={styles.root}>
-      <Header progress={currentQuestionIndex / question.length} />
+      <Header progress={currentQuestionIndex / question.length} lives={lives} />
       {currentQuestion.type === "IMAGE_MULTIPLE_CHOICE" && (
         <ImageMultipleChoiceQuestion
           question={currentQuestion}
