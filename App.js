@@ -10,7 +10,9 @@ import ImageMultipleChoiceQuestion from "./src/components/ImageMultipleChoiceQue
 import question from "./assets/data/allQuestions";
 import Header from "./src/components/Header/Header";
 import allQuestions from "./assets/data/allQuestions";
-import { registerAsset } from "react-native-web/dist/cjs/modules/AssetRegistry";
+import AsyncStorage from "@react-native-async-storage/async-storage"; //npm install @react-native-async-storage/async-storage
+import { ActivityIndicator } from "react-native";
+import FillInTheBlank from "./src/components/FillInTheBlank";
 
 const App = () => {
   // const origin = [1,2,3]; // const double = origin.map((iterator)=>iterator*2); // console.log(double); // const status = 'ok';
@@ -18,7 +20,37 @@ const App = () => {
   const [currentQuestion, setCurrentQuestion] = useState(
     question[currentQuestionIndex]
   );
+  const saveData = async () => {
+    await AsyncStorage.setItem("lives", lives.toString());
+    await AsyncStorage.setItem(
+      "currentQuestionIndex",
+      currentQuestionIndex.toString()
+    );
+  };
+  const loadData = async () => {
+    const loadedLives = await AsyncStorage.getItem("lives");
+    if (loadedLives) {
+      setLives(parseInt(loadedLives));
+    }
+    const currentQuestionIndex = await AsyncStorage.getItem(
+      "currentQuestionIndex"
+    );
+    if (currentQuestionIndex) {
+      setCurrentQuestionIndex(parseInt(currentQuestionIndex));
+    }
+    setHasLoaded(true);
+  };
   const [lives, setLives] = useState(5);
+  useEffect(() => {
+    loadData();
+  }, []);
+  const [hasLoaded, setHasLoaded] = useState(false);
+  useEffect(() => {
+    if (hasLoaded) {
+      saveData();
+    }
+  }, [lives, currentQuestionIndex, hasLoaded]);
+
   useEffect(() => {
     if (currentQuestionIndex >= question.length) {
       Alert.alert("You Won!!!");
@@ -47,10 +79,20 @@ const App = () => {
       Alert.alert("Wrooong");
     }
   };
+  if (!hasLoaded) {
+    return <ActivityIndicator />;
+  }
+
   return (
     <View style={styles.root}>
       <Header progress={currentQuestionIndex / question.length} lives={lives} />
-      {currentQuestion.type === "IMAGE_MULTIPLE_CHOICE" && (
+      <FillInTheBlank
+        question={currentQuestion}
+        onCorrect={onCorrect}
+        onWrong={onWrong}
+      />
+
+      {/* {currentQuestion.type === "IMAGE_MULTIPLE_CHOICE" && (
         <ImageMultipleChoiceQuestion
           question={currentQuestion}
           onCorrect={onCorrect}
@@ -63,7 +105,7 @@ const App = () => {
           onCorrect={onCorrect}
           onWrong={onWrong}
         />
-      )}
+      )} */}
     </View>
   );
 };
