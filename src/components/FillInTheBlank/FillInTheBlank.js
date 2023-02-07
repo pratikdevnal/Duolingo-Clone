@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text } from "react-native";
 import Button from "../Button";
 import styles from "./styles";
+import WordOption from "../WordOption/WordOption";
 
 const FillInTheBlank = () => {
   const onButtonPress = () => {};
@@ -12,7 +13,11 @@ const FillInTheBlank = () => {
         <Text>e wq ecx asfd asdqf adsf</Text>
         <View style={styles.blank}></View>
       </View>
-      <View style={styles.optionsContainer}></View>
+      <View style={styles.optionsContainer}>
+        <WordOption />
+        <WordOption />
+        <WordOption />
+      </View>
       <Button text="Check" onPress={onButtonPress} disabled={true} />
     </View>
   );
