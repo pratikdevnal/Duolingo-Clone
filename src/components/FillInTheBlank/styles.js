@@ -8,19 +8,35 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: "row",
+    alignSelf: "flex-start",
+    marginVertical: 10,
+    height: 60,
+  },
+  text: {
+    alignSelf: "flex-end",
+    fontSize: 18,
   },
   blank: {
-    borderBottomWidth: 1,
+    borderBottomWidth: 2,
     borderColor: "lightgrey",
     width: 100,
   },
   optionsContainer: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    alignContent: "center",
     flexDirection: "row",
+
+    alignItems: "center",
+    // justifyContent: "center",
+    alignContent: "center",
+
     flexWrap: "wrap",
+    // backgroundColor:"red",
+    // width:'100%',
+    //         flexDirection:"row",
+    //         flex:1,
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+    // alignContent: "space-between",
   },
 });
 

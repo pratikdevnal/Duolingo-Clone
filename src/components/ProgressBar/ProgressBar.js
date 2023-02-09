@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet } from "react-native";
 import React from "react";
-import style from "./styles";
+
 export default function ProgressBar({ progress }) {
   return (
     <View style={styles.bg}>

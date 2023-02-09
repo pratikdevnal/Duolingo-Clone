@@ -1,11 +1,22 @@
-import { View, Text } from "react-native";
+import { Pressable, Text } from "react-native";
 import React from "react";
+import styles from "./styles";
 
-const WordOption = () => {
+const WordOption = ({ text, isSelected, onPress }) => {
   return (
-    <View>
-      <Text>Option</Text>
-    </View>
+    <Pressable
+      onPress={onPress}
+      style={[
+        styles.root,
+        { backgroundColor: isSelected ? "lightgrey" : "white" },
+      ]}
+    >
+      <Text
+        style={[styles.text, { color: isSelected ? "lightgrey" : "black" }]}
+      >
+        {text}
+      </Text>
+    </Pressable>
   );
 };
 

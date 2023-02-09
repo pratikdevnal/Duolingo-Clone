@@ -36,6 +36,7 @@ const App = () => {
       "currentQuestionIndex"
     );
     if (currentQuestionIndex) {
+      // setCurrentQuestionIndex(0);
       setCurrentQuestionIndex(parseInt(currentQuestionIndex));
     }
     setHasLoaded(true);
@@ -86,13 +87,8 @@ const App = () => {
   return (
     <View style={styles.root}>
       <Header progress={currentQuestionIndex / question.length} lives={lives} />
-      <FillInTheBlank
-        question={currentQuestion}
-        onCorrect={onCorrect}
-        onWrong={onWrong}
-      />
 
-      {/* {currentQuestion.type === "IMAGE_MULTIPLE_CHOICE" && (
+      {currentQuestion.type === "IMAGE_MULTIPLE_CHOICE" && (
         <ImageMultipleChoiceQuestion
           question={currentQuestion}
           onCorrect={onCorrect}
@@ -105,7 +101,14 @@ const App = () => {
           onCorrect={onCorrect}
           onWrong={onWrong}
         />
-      )} */}
+      )}
+      {currentQuestion.type === "FILL_IN_THE_BLANK" && (
+        <FillInTheBlank
+          question={currentQuestion}
+          onCorrect={onCorrect}
+          onWrong={onWrong}
+        />
+      )}
     </View>
   );
 };
